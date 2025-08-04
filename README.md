@@ -43,7 +43,7 @@
 ```bash
 sudo sh sandbox_db_run.sh
 ```
-*Для тех, у кого Windows, 
+Для тех, у кого Windows, 
 ```bash
 New-Item -ItemType Directory -Force -Path .\services\volume\airflow\dags
 
@@ -76,7 +76,7 @@ docker compose up airflow-init
 
 # Запуск всех сервисов
 docker compose up -d
-*
+
 ```
 А если нужно полное удаление
 ```bash
