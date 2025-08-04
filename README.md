@@ -44,23 +44,31 @@
 sudo sh sandbox_db_run.sh
 ```
 *Для тех, у кого Windows, 
-# Создание нужных директорий
+
 New-Item -ItemType Directory -Force -Path .\services\volume\airflow\dags
+
 New-Item -ItemType Directory -Force -Path .\services\volume\airflow\logs
+
 New-Item -ItemType Directory -Force -Path .\services\volume\airflow\plugins
+
 New-Item -ItemType Directory -Force -Path .\services\volume\airflow\config
+
 New-Item -ItemType Directory -Force -Path .\services\volume\postgres
+
 New-Item -ItemType Directory -Force -Path .\services\volume\minio
+
 New-Item -ItemType Directory -Force -Path .\services\configs\airflow
+
 New-Item -ItemType Directory -Force -Path .\services\configs\hadoop
+
 New-Item -ItemType Directory -Force -Path .\services\configs\jupiterhub
+
 New-Item -ItemType Directory -Force -Path .\services\datasets
 
-# Установка разрешений на папки (Windows не требует chmod, но можно добавить FullControl вручную при необходимости)
-
-# Создание переменной окружения для Airflow UID
 $airflowUid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User.Value
+
 "## Windows SID for reference (not used in containers)
+
 AIRFLOW_UID=50000" | Out-File -Encoding ASCII -FilePath .\services\configs\airflow\env
 
 # Запуск и инициализация базы данных airflow
