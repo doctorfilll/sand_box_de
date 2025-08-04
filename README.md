@@ -1,8 +1,9 @@
-![logo_sandbox](./data/logo2.png){style="display: block; margin: 0 auto"}
+
 
 **Sandbox DB** — это песочница для изучения современных технологий обработки данных, аналитики и визуализации.  
 Я собрал все сервисы в одном месте, настроил и отладил их работу.  
 Вам остаётся только запустить их и приступить к обучению.
+Эта конфигурация настроена как и для Windows так и для Linux.
 
 ## Что внутри?
 
@@ -42,7 +43,32 @@
 ```bash
 sudo sh sandbox_db_run.sh
 ```
-*Для тех, у кого Windows, откройте файл в текстовом редакторе и выполняйте команды по списку, с учётом синтаксиса командной строки Windows*
+*Для тех, у кого Windows, 
+# Создание нужных директорий
+New-Item -ItemType Directory -Force -Path .\services\volume\airflow\dags
+New-Item -ItemType Directory -Force -Path .\services\volume\airflow\logs
+New-Item -ItemType Directory -Force -Path .\services\volume\airflow\plugins
+New-Item -ItemType Directory -Force -Path .\services\volume\airflow\config
+New-Item -ItemType Directory -Force -Path .\services\volume\postgres
+New-Item -ItemType Directory -Force -Path .\services\volume\minio
+New-Item -ItemType Directory -Force -Path .\services\configs\airflow
+New-Item -ItemType Directory -Force -Path .\services\configs\hadoop
+New-Item -ItemType Directory -Force -Path .\services\configs\jupiterhub
+New-Item -ItemType Directory -Force -Path .\services\datasets
+
+# Установка разрешений на папки (Windows не требует chmod, но можно добавить FullControl вручную при необходимости)
+
+# Создание переменной окружения для Airflow UID
+$airflowUid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User.Value
+"## Windows SID for reference (not used in containers)
+AIRFLOW_UID=50000" | Out-File -Encoding ASCII -FilePath .\services\configs\airflow\env
+
+# Запуск и инициализация базы данных airflow
+docker compose up airflow-init
+
+# Запуск всех сервисов
+docker compose up -d
+*
 
 А если нужно полное удаление
 ```bash
